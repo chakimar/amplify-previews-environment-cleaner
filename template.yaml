@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  amplify-review-environment-cleaner
+
+Parameters:
+  AppName:
+    Type: String
+    Description: amplify app name
+    Default: "amplify-app"
+  Buckets:
+    Type: String
+    Description: >
+      comma separated buckets without env name
+      e.g. "photo,movie"
+    Default: ""
+
+Resources:
+  CleanerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: cleaner/
+      Handler: app.lambda_handler
+      Runtime: python3.8
+      Timeout: 600
+      Policies:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      Environment:
+        Variables:
+          APP_NAME: !Ref AppName
+          BUCKETS: !Ref Buckets
+      Events:
+        Cleaner:
+          Type: Schedule
+          Properties:
+            Schedule: rate(1 day)
+            Description: amplify review environment cleaner schedule
+            Enabled: True
+
+Outputs:
+  CleanerFunction:
+    Description: "amplify review environment cleaner Lambda Function ARN"
+    Value: !GetAtt CleanerFunction.Arn
+  CleanerFunctionIamRole:
+    Description: "Implicit IAM Role created for amplify review environment cleaner function"
+    Value: !GetAtt CleanerFunctionRole.Arn
