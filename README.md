@@ -1,5 +1,5 @@
-# amplify-review-environment-cleaner
-amplifyのPRレビュー機能によって作成された環境のゴミを削除するLambda関数
+# amplify-preview-environment-cleaner
+amplifyのPRプレビュー機能によって作成された環境のゴミを削除するLambda関数
 
 
 ## Prerequisuites

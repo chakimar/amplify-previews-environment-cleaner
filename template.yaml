@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  amplify-review-environment-cleaner
+  amplify-previews-environment-cleaner
 
 Parameters:
   AppName:
@@ -34,13 +34,13 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: rate(1 day)
-            Description: amplify review environment cleaner schedule
+            Description: amplify previews environment cleaner schedule
             Enabled: True
 
 Outputs:
   CleanerFunction:
-    Description: "amplify review environment cleaner Lambda Function ARN"
+    Description: "amplify previews environment cleaner Lambda Function ARN"
     Value: !GetAtt CleanerFunction.Arn
   CleanerFunctionIamRole:
-    Description: "Implicit IAM Role created for amplify review environment cleaner function"
+    Description: "Implicit IAM Role created for amplify previews environment cleaner function"
     Value: !GetAtt CleanerFunctionRole.Arn
